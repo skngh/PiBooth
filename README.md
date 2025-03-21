@@ -7,6 +7,17 @@ Welcome welcome! This is a tutorial on how to make what I call PiBooth! It's a "
 # Table of Contents
 
 1. [Convert laptop screen to HDMI monitor](#how-to-convert-old-laptop-screen-hdmi-monitor)
+2. [Getting a Raspberry Pi](#getting-a-raspberry-pi)
+   - [Setting up your Pi](#setting-up-your-pi)
+3. [Code](#code)
+   - [Processing](#processing)
+   - [OpenCV Python](#opencv-python)
+   - [Run Script on Startup](#how-to-run-our-python-script-on-startup)
+4. [Bonus](#bonus)
+
+## Making the PiBooth from start to finish
+
+Here are step by step instructions on how to get my exact code I wrote working on your Raspberry Pi. Then after I will dive into each individual step in more detail, for those that don't want to make the exact project I did.
 
 ## How to convert old laptop screen to HDMI monitor
 
@@ -72,6 +83,8 @@ Instead of having to start your script everytime you turn off and on your Pi, we
 
 One of the methods is to add our script to Cron, which is a job scheduler that we can tell to perform tasks at certain times. For some reason, this method did not work for me. This is most likely due to dependencies being needed that aren't loaded yet before the script runs. Either way, incase you're running a different script than this project, [here's](https://www.raspberrypi-spy.co.uk/2013/07/running-a-python-script-at-boot-using-cron/) an article detailing how to do it (I'm including this because if you do have a simple script, this definitely seems to be the easiest method available).
 
+Also with a quick search you'll see some people saying that for contab you can put "sleep {seconds}" after @reboot and that will fix dependencies issues, but that still didn't make it work for me, so I more robust service was needed.
+
 ### Systemd
 
 A quick google search tells us that systemd "is a system and service manager for Linux, acting as the init system that manages the boot process, starts and stops services, and handles system shutdowns," which is pretty much about all I can say about it. For our purposes, it'll be a reasonably easy way to setup running our script on startup, but it's just a bit more involved than cron
@@ -82,4 +95,10 @@ On [this](https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry
 
 If you want a more in depth explanation on how systemd works, [this github post](https://github.com/thagrol/Guides/blob/main/boot.pdf) goes into more detail about each section and their meaning.
 
-I included my service file in the
+I included my service file [in the repo](https://github.com/skngh/PiBooth/blob/main/Python%20Code/pibooth.service) if you want to check it out. I found that ChatGPT was pretty helpful in writing the file so that's where you may see things that weren't mentioned in the links above. (I can't fully explain what they mean, but I was having problems with the service opening and using my correct screen, and after asking chatGPT it spit out that code and it worked).
+
+# Bonus
+
+As shown in the video, I used a smart outlet and plugged both my screen and pi into so I can have it auto turn on and off during the night. I highly recommend this whenever doing art installation kind of stuff so they never have to run when they wouldn't otherwise be seen/used.
+
+Also I'm not including any of the 3D models I printed for the project, because I felt they were very specific to my exact setup and I assume no one would find value in them, but if someone out there thinks a specific model I made or used would be helpful to them, feel free to reach out to me.
