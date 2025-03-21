@@ -1,0 +1,17 @@
+[Unit]
+Description=PiBooth python script
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/skngh/env/bin/python /home/skngh/PiBooth.py
+Restart=on-abort
+WorkingDirectory=/home/skngh
+Environment="XAUTHORITY=/home/skngh/.Xauthority"
+Environment="DISPLAY=:0"
+User=skngh
+
+[Install]
+WantedBy=multi-user.target
+
+
