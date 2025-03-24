@@ -1,6 +1,6 @@
 # PiBooth
 
-(Everything below is written assuming you've seen [this](https://www.youtube.com/watch?v=9GyJJn6zX-A) video)
+(Everything below is written assuming you've seen [this](https://youtu.be/JYDAor1Wx60) video)
 
 Welcome welcome! This is a tutorial on how to make what I call PiBooth! It's a "photobooth" that takes a photo and puts filtering on it to look like my roommates art. If you're not interested in making the full project but just certain aspects of it, then it is hopefully still covered in here! For the most part, I'll just be linking the videos that helped me, so full credit to all the creators below! You can refer to the table of contents below
 
