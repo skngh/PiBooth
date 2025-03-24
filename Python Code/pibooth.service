@@ -4,12 +4,12 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/home/skngh/env/bin/python /home/skngh/PiBooth.py
+ExecStart=/home/pi/env/bin/python /home/pi/PiBooth.py
 Restart=on-abort
-WorkingDirectory=/home/skngh
-Environment="XAUTHORITY=/home/skngh/.Xauthority"
+WorkingDirectory=/home/pi
+Environment="XAUTHORITY=/home/pi/.Xauthority"
 Environment="DISPLAY=:0"
-User=skngh
+User=pi
 
 [Install]
 WantedBy=multi-user.target

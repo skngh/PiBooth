@@ -10,7 +10,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(BUTTON_GPIO, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # Set the save path to the desktop
-desktop_path = os.path.expanduser("/home/skngh/Desktop/photo.jpg")
+desktop_path = os.path.expanduser("/home/pi/Desktop/photo.jpg")
 
 # Initialize Picamera2
 picam2 = Picamera2()

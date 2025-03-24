@@ -46,7 +46,7 @@ Here are step by step instructions on how to get my exact code I wrote working o
    - Then download [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/?lai_vid=8r8GXQgGdfBlE&lai_sr=5-9&lai_sl=l), open it, right click and hit "New Connection", and type in your Pi's username and password. Now you should be connected to your Pi! **_Technically you could get this whole project running with only using SSH, but I think it's handy to fully connect to the Pi sometimes_**
 3. Hook up your camera's ribbon cable to the [correct part on your Pi](https://www.youtube.com/watch?v=lAbpDRy-gc0).
 4. Hook up your button with jumper cables to your Pi's GPIO pin 2. You can follow this article [here](https://projects.raspberrypi.org/en/projects/button-switch-scratch-pi/1).
-5. Download my Python file and type `scp [path To File To Copy] pi@[IpAdress]:[RaspPiDirectory]`
+5. Download my Python file and type `scp [path To File To Copy] pi@[IpAdress]:/home/pi`
    - So for example, if I wanted to copy a file in my Desktop on my Mac, to my home directory on my Pi, I would type `scp /Users/samknight/Desktop/PiBooth.py pi@[ipAdress]:/home/pi` (You could also just cd into your files directory and skip putting the whole file path).
    - Go watch [this video](https://www.youtube.com/watch?v=QzVYnG-WaM4) to get OpenCV working on the Pi.
    - Run your python script and test if it is working. There are a few dependencies (picamera2 & RPi.gpio) that depending on your OS version, come preinstalled with the Pi. If you're getting errors about them, you can easily google each one to find the correct way to install them.
