@@ -1,23 +1,63 @@
 # PiBooth
 
-(Everything below is written assuming you've seen this[LINK] video)
+(Everything below is written assuming you've seen [this](https://www.youtube.com/watch?v=9GyJJn6zX-A) video)
 
 Welcome welcome! This is a tutorial on how to make what I call PiBooth! It's a "photobooth" that takes a photo and puts filtering on it to look like my roommates art. If you're not interested in making the full project but just certain aspects of it, then it is hopefully still covered in here! For the most part, I'll just be linking the videos that helped me, so full credit to all the creators below! You can refer to the table of contents below
 
 # Table of Contents
 
-1. [Convert laptop screen to HDMI monitor](#how-to-convert-old-laptop-screen-hdmi-monitor)
-2. [Getting a Raspberry Pi](#getting-a-raspberry-pi)
+1. [Step by step guide to PiBooth](#making-the-pibooth-from-start-to-finish)
+2. [Convert laptop screen to HDMI monitor](#how-to-convert-old-laptop-screen-hdmi-monitor)
+3. [Getting a Raspberry Pi](#getting-a-raspberry-pi)
    - [Setting up your Pi](#setting-up-your-pi)
-3. [Code](#code)
+4. [Code](#code)
    - [Processing](#processing)
    - [OpenCV Python](#opencv-python)
    - [Run Script on Startup](#how-to-run-our-python-script-on-startup)
-4. [Bonus](#bonus)
+5. [Bonus](#bonus)
 
 ## Making the PiBooth from start to finish
 
 Here are step by step instructions on how to get my exact code I wrote working on your Raspberry Pi. Then after I will dive into each individual step in more detail, for those that don't want to make the exact project I did.
+
+#### List of materials:
+
+- **Raspberry Pi** (I only tested this on a Pi4 with 4Gb ram, so i cannot confirm nor deny whether this would all work on a different model)
+- **Raspberry Pi case with Fan.** Any one will do. You can always 3D print one.
+- **Camera for the Raspberry Pi.** There are many cheap cameras out there for the Pi. I bought this one [here](https://www.amazon.com/dp/B07L82XBNM?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_3). There are some that are USB connected that I'm not sure would directly work with the code I wrote, so a ribbon connected one is best.
+- **External screen.** I used an old laptop screen, but any screen will do.
+- **Button & jumper cables.** I just used a simple 2 pin button I had laying around.
+- **Screen/system enclosure for presentation.** This part is totally up to you! You can follow how I did it in the video, or create your own version. I had a mount for my Pi, button, and camera.
+
+### Steps:
+
+1. Download the [Raspberry Pi Imager](https://www.raspberrypi.com/software/) and plug in your Pi's microSD card.
+   - Open the imager, select your Pi version and recommended OS.
+   - Click "Edit Settings" to apply OS Costumisation.
+   - Make your hostname a simple one like the default "pi". (**_The rest of these instructions will be written assuming your hostname is pi_**)
+   - Add a simple username and password
+   - Add your Wifi login
+   - Hit "Services" and make sure "Use SSH" with password authentication is checked.
+   - Then hit Save and flash it onto your Pi.
+2. Once it's flashed, put the SD card back and boot up your Pi
+   - Type `ping pi.local` in your terminal to try and get your Pi's IP address. If that doesn't work, you can download [IP Scanner](https://apps.apple.com/us/app/ip-scanner/id6443819966) and check there.
+   - Type `ssh pi@[ipAddress]` then type in your Pi's password.
+   - Once logged into your Pi, type `sudo raspi-config`, go to "Interface Options," "VNC," and hit "Yes" to enable
+   - Then download [VNC Viewer](https://www.realvnc.com/en/connect/download/viewer/?lai_vid=8r8GXQgGdfBlE&lai_sr=5-9&lai_sl=l), open it, right click and hit "New Connection", and type in your Pi's username and password. Now you should be connected to your Pi! **_Technically you could get this whole project running with only using SSH, but I think it's handy to fully connect to the Pi sometimes_**
+3. Hook up your camera's ribbon cable to the [correct part on your Pi](https://www.youtube.com/watch?v=lAbpDRy-gc0).
+4. Hook up your button with jumper cables to your Pi's GPIO pin 2. You can follow this article [here](https://projects.raspberrypi.org/en/projects/button-switch-scratch-pi/1).
+5. Download my Python file and type `scp [path To File To Copy] pi@[IpAdress]:[RaspPiDirectory]`
+   - So for example, if I wanted to copy a file in my Desktop on my Mac, to my home directory on my Pi, I would type `scp /Users/samknight/Desktop/PiBooth.py pi@[ipAdress]:/home/pi` (You could also just cd into your files directory and skip putting the whole file path).
+   - Go watch [this video](https://www.youtube.com/watch?v=QzVYnG-WaM4) to get OpenCV working on the Pi.
+   - Run your python script and test if it is working. There are a few dependencies (picamera2 & RPi.gpio) that depending on your OS version, come preinstalled with the Pi. If you're getting errors about them, you can easily google each one to find the correct way to install them.
+   - After that, your code should hopefully run when calling it directly from your terminal.
+6. Now go into your Pi's terminal (either with ssh or through the VNC Viewer)
+   - Type `sudo nano /etc/systemd/system/pibooth.service`
+   - A text editor should open up, and now you can copy and paste my service file into the text editor in the terminal (If using VNC Viewer on a mac, I've found I have to right click and hit paste or it's kinda finicky).
+   - Reload systemd process in terminal with `sudo systemctl daemon-reload`
+   - Then type ```sudo systemctl enable pibooth.service
+   - You can then check your service with `sudo systemctl pibooth.service`
+7. Restart your Pi and see if it works!
 
 ## How to convert old laptop screen to HDMI monitor
 
@@ -91,7 +131,7 @@ A quick google search tells us that systemd "is a system and service manager for
 
 In order to run our script, we'll need to make a systemd service file. There are a couple posts written about how to do this, so I'll link those.
 
-On [this](https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry-pi-at-startup/) article there's an area at the bottom explaining systemd that should get you setup.
+On [this](https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry-pi-at-startup/) article there's an area at the bottom explaining systemd that should get you setup. [This](https://www.thedigitalpictureframe.com/ultimate-guide-systemd-autostart-scripts-raspberry-pi/) is a great article too.
 
 If you want a more in depth explanation on how systemd works, [this github post](https://github.com/thagrol/Guides/blob/main/boot.pdf) goes into more detail about each section and their meaning.
 
